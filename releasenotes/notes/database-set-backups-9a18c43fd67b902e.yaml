@@ -1,0 +1,13 @@
+---
+features:
+  - |
+    Database commands now update names, descriptions, resource limits and
+    public access, including the allowed source network. Database creation
+    also supports public access. Show output includes public access details
+    and reports when a restart is required. New database backup commands
+    manage schedules and retention, create backups and list them. Existing
+    backup commands show, download, delete and restore database backups.
+  - |
+    Database backups require a Swift-compatible object-storage endpoint on the
+    cloud. They are not verified end to end in 0.1.0; full verification is
+    tracked for 0.1.1 (gozunga/coast#124).

@@ -1,0 +1,7 @@
+features:
+  - |
+    Add database engine discovery, create, list, show, delete, start, stop,
+    restart, logs and credentials commands using Coast API 1.29. Engine and
+    version choices come from the API catalog. Lifecycle commands can wait
+    for completion. Credentials mask passwords and password-bearing URLs
+    unless explicitly revealed with --show-password.

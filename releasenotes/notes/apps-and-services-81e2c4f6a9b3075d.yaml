@@ -1,0 +1,41 @@
+---
+features:
+  - |
+    App groups belong to stacks and contain environments. App group and
+    environment commands create, list, show, update and delete these
+    resources. Show includes current apps and services; app group show
+    also includes environments.
+  - |
+    ``app create`` accepts Git sources through ``--repo-url`` or container
+    images through ``--image`` and ``--tag``. ``service create`` accepts
+    a template slug through ``--template`` or a container image through
+    ``--image`` and ``--tag``. Both require ``--appgroup``, ``--environment``
+    and ``--server``. Source errors identify the conflicting options or
+    the missing image or tag. App and image-service creation use API 1.11
+    or later.
+    ``template list`` and ``template show`` select a stack with ``--stack``.
+  - |
+    Apps and services support list, show, set, delete, start, stop and
+    restart. Create and set accept ``--ports``, ``--cpu-limit``,
+    ``--memory-limit-mb`` and ``--health-check none|http``. HTTP probes
+    accept ``--health-check-port`` and ``--health-check-path``; health
+    check writes use API 1.4 or later. Set supports ``--no-ports`` and
+    ``--enable-default-domain`` or ``--disable-default-domain``.
+  - |
+    ``deploy`` submits a deployment. Deployment commands list, show, read
+    logs, cancel and roll back deployments. ``logs --service SERVICE``
+    reads workload logs; container commands list, show and read container logs. ``metrics show``
+    accepts ``--range 15m|1h|6h|24h|7d|30d`` for an app or service.
+  - |
+    ``app exec`` and ``service exec`` open an interactive container
+    terminal, or run a command supplied after ``--`` and return its remote
+    exit status. Console requests use API 1.9 or later.
+    ``app webhook show --app APP`` and
+    ``app webhook regenerate --app APP`` use API 1.3 or later.
+  - |
+    Git apps accept ``app set --branch``, ``--build-pack``,
+    ``--dockerfile-path``, ``--compose-path`` and ``--base-directory``;
+    omitted source settings are preserved. App and service set accept
+    ``--no-cpu-limit`` and ``--no-memory-limit`` to clear limits, mutually
+    exclusive with their setters. CPU limits are positive finite numbers.
+    Worker names on create resolve within the selected app group's stack.

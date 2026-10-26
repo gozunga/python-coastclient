@@ -1,0 +1,29 @@
+---
+features:
+  - |
+    Storage commands manage persistent volume and bind mounts within a
+    stack, including attachment and detachment. At API 1.28, create takes
+    ``--type volume|bind``, ``--service`` and ``--container-path``. Volume
+    mounts require ``--name`` and ``--size-gb``; bind mounts require
+    ``--host-path``. ``--read-only on|off`` controls mount access.
+    Storage lists show Type, Name, Source, Container path, Size (GiB),
+    Read-only and Status alongside ID. Missing fields stay blank on older
+    APIs. ``storage list --service SERVICE`` filters mounts by app or
+    service name or UUID within the selected stack.
+    Volume commands create, list, show, extend, snapshot and delete data
+    volumes; sizes supplied through ``--size-gb`` are in GiB.
+  - |
+    Backup commands create, list, show, delete, download and restore
+    database backups. Backup policy show and set manage scheduling and
+    retention for ``--service``. Restore accepts ``--mode new_copy --name``
+    or ``--mode overwrite --confirmation``. Download requires ``--file``
+    naming a new destination and validates the gzip stream before
+    publishing the file.
+  - |
+    Export commands create, list, show, delete and renew stack exports
+    selected with ``--stack``. Create accepts repeatable ``--volume``
+    UUIDs. Renew refreshes download URLs without extending object retention.
+  - |
+    Database backups require a Swift-compatible object-storage endpoint on the
+    cloud. They are not verified end to end in 0.1.0; full verification is
+    tracked for 0.1.1 (gozunga/coast#124).

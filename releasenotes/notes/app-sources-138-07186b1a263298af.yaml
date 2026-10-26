@@ -1,0 +1,12 @@
+features:
+  - |
+    Create apps from private Git repositories with generated or uploaded
+    deploy keys, or upload a Dockerfile or Compose file without a repository.
+    Read public deploy keys, rotate keys, and read or replace Dockerfiles.
+    Coast generates ed25519 keys and stores private keys in Barbican; only
+    public keys are returned in API responses, CLI output and the dashboard.
+    Generated-key apps do not deploy until the user adds the public key to
+    the Git host and deploys. Rotation and source editing save without
+    deploying. Redeploy skips an unchanged Dockerfile and reuses its image;
+    a changed Dockerfile is refused. Create a new app from the new Dockerfile
+    or deploy from a Git repository. Owned secrets are deleted on teardown.

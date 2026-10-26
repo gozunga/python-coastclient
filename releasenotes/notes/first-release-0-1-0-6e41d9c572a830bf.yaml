@@ -1,0 +1,9 @@
+---
+prelude: >
+  Version 0.1.0 is the first release of python-coastclient, the
+  OpenStackClient plugin for Coast application hosting. Its
+  ``openstack coast`` commands manage stacks, app groups, apps and
+  template services, environments, servers, deployments, environment
+  variables, domains and DNS, storage and volumes, backups and exports,
+  quotas, events, flavors and plans, and container terminals. The client
+  uses OpenStackClient authentication and Keystone catalog discovery.

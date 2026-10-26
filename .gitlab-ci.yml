@@ -1,0 +1,142 @@
+# GitLab CI for python-coastclient: each job runs one tox environment.
+#
+# Merge requests: pep8 and gitleaks always run; unit/genconfig run on code or build
+# changes; docs on docs/notes changes. Pipelines on main, schedules and
+# web-triggered pipelines run every job.
+image: python:3.12
+
+stages:
+  - test
+  - publish
+
+# Scan the full tracked tree, including dotfiles, without scanning old commits.
+# No custom config: use all default rules and no project allowlist.
+gitleaks:
+  stage: test
+  image:
+    name: zricethezav/gitleaks:v8.30.0
+    entrypoint: [""]
+  interruptible: true
+  script:
+    - scan_dir=$(mktemp -d)
+    - git archive HEAD | tar -x -C "$scan_dir"
+    - gitleaks dir --redact --no-banner "$scan_dir"
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_PIPELINE_SOURCE == "web"
+    - if: $CI_COMMIT_TAG
+
+.tox:
+  stage: test
+  interruptible: true
+  cache:
+    key:
+      prefix: "$CI_JOB_NAME"
+      files:
+        - requirements.txt
+        - test-requirements.txt
+    paths:
+      - .cache/pip
+      - .tox
+  before_script:
+    - python -m pip install 'tox>=4,<5'
+  script:
+    - tox -e "$TOXENV"
+
+.code_rules:
+  rules:
+    - if: $CI_PIPELINE_SOURCE != "merge_request_event"
+    - changes:
+        - coastclient/**/*
+        - tools/**/*
+        - setup.cfg
+        - setup.py
+        - requirements.txt
+        - test-requirements.txt
+        - tox.ini
+        - .stestr.conf
+        - .gitlab-ci.yml
+
+unit:
+  extends: [.tox, .code_rules]
+  variables:
+    TOXENV: py3
+
+pep8:
+  extends: .tox
+  variables:
+    TOXENV: pep8
+
+docs:
+  extends: .tox
+  variables:
+    TOXENV: docs
+    # reno walks the whole history; a shallow clone misses older notes.
+    GIT_DEPTH: 0
+  rules:
+    - if: $CI_PIPELINE_SOURCE != "merge_request_event"
+    - changes:
+        - doc/**/*
+        - releasenotes/**/*
+        - "**/*.rst"
+        - "**/*.md"
+        - coastclient/**/*
+        - setup.cfg
+        - tox.ini
+        - .gitlab-ci.yml
+
+genconfig:
+  extends: [.tox, .code_rules]
+  variables:
+    TOXENV: genconfig
+
+# Run on an operator-configured DevStack runner with protected cloud profiles.
+# Runs only when COAST_ACCEPTANCE_CONFIG is set (no endpoints or credentials
+# here); otherwise the job is skipped so pipelines can finish green. Devstack
+# acceptance checks on each Coast card cover this today (gozunga/coast#12).
+functional:
+  extends: .tox
+  rules:
+    - if: $COAST_ACCEPTANCE_CONFIG
+    - when: never
+  allow_failure: false
+  variables:
+    TOXENV: functional
+    COAST_ACCEPTANCE_REQUIRED: "1"
+
+# Publish a release snapshot to the public GitHub repo. Manual, and only in
+# a tag pipeline: the one started by creating the tag, or one run for the
+# tag from the web UI or the API. tools/publish-snapshot.sh drops the
+# .publish-exclude paths, runs gitleaks and pushes one commit plus the tag
+# without force.
+# GITHUB_PUBLISH_TOKEN must be a masked, protected variable, so the tag
+# must be protected too.
+publish-github:
+  stage: publish
+  # Publish only what passed every validation job in this pipeline.
+  needs:
+    - unit
+    - pep8
+    - docs
+    - genconfig
+    # functional runs only when COAST_ACCEPTANCE_CONFIG is set.
+    - job: functional
+      optional: true
+  interruptible: false
+  rules:
+    - if: $CI_COMMIT_TAG && $CI_PIPELINE_SOURCE =~ /^(push|api|web)$/
+      when: manual
+    - when: never
+  script:
+    - tools/publish-snapshot.sh "$CI_COMMIT_TAG"

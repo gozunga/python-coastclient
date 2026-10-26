@@ -1,0 +1,226 @@
+{
+  "stack_list": [
+    "GET",
+    "/v1/stacks"
+  ],
+  "stack_create": [
+    "POST",
+    "/v1/stacks"
+  ],
+  "stack_show": [
+    "GET",
+    "/v1/stacks/{stack_id}"
+  ],
+  "stack_delete": [
+    "DELETE",
+    "/v1/stacks/{stack_id}"
+  ],
+  "appgroup_list": [
+    "GET",
+    "/v1/stacks/{stack_id}/appgroups"
+  ],
+  "appgroup_create": [
+    "POST",
+    "/v1/stacks/{stack_id}/appgroups"
+  ],
+  "appgroup_show": [
+    "GET",
+    "/v1/appgroups/{appgroup_id}"
+  ],
+  "appgroup_delete": [
+    "DELETE",
+    "/v1/appgroups/{appgroup_id}"
+  ],
+  "environment_list": [
+    "GET",
+    "/v1/appgroups/{appgroup_id}/environments"
+  ],
+  "environment_create": [
+    "POST",
+    "/v1/appgroups/{appgroup_id}/environments"
+  ],
+  "environment_show": [
+    "GET",
+    "/v1/environments/{environment_id}"
+  ],
+  "environment_delete": [
+    "DELETE",
+    "/v1/environments/{environment_id}"
+  ],
+  "server_add": [
+    "POST",
+    "/v1/stacks/{stack_id}/servers"
+  ],
+  "server_list": [
+    "GET",
+    "/v1/stacks/{stack_id}/servers"
+  ],
+  "server_remove": [
+    "DELETE",
+    "/v1/stacks/{stack_id}/servers/{server_id}"
+  ],
+  "stack_event_list": [
+    "GET",
+    "/v1/stacks/{stack_id}/events"
+  ],
+  "service_list": [
+    "GET",
+    "/v1/services"
+  ],
+  "service_create": [
+    "POST",
+    "/v1/services"
+  ],
+  "service_show": [
+    "GET",
+    "/v1/services/{service_id}"
+  ],
+  "service_set": [
+    "PATCH",
+    "/v1/services/{service_id}"
+  ],
+  "service_delete": [
+    "DELETE",
+    "/v1/services/{service_id}"
+  ],
+  "service_start": [
+    "POST",
+    "/v1/services/{service_id}/action"
+  ],
+  "service_exec": [
+    "POST",
+    "/v1/services/{service_id}/console"
+  ],
+  "app_exec": [
+    "POST",
+    "/v1/apps/{app_id}/console"
+  ],
+  "logs": [
+    "GET",
+    "/v1/services/{service_id}/logs"
+  ],
+  "env_list": [
+    "GET",
+    "/v1/services/{service_id}/env"
+  ],
+  "env_set": [
+    "PATCH",
+    "/v1/services/{service_id}/env"
+  ],
+  "domain_list": [
+    "GET",
+    "/v1/services/{service_id}/domains"
+  ],
+  "domain_add": [
+    "POST",
+    "/v1/services/{service_id}/domains"
+  ],
+  "domain_show": [
+    "GET",
+    "/v1/services/{service_id}/domains/{domain_id}"
+  ],
+  "domain_set": [
+    "PATCH",
+    "/v1/services/{service_id}/domains/{domain_id}"
+  ],
+  "domain_remove": [
+    "DELETE",
+    "/v1/services/{service_id}/domains/{domain_id}"
+  ],
+  "domain_verify": [
+    "POST",
+    "/v1/services/{service_id}/domains/{domain_id}/action"
+  ],
+  "deployment_list": [
+    "GET",
+    "/v1/services/{service_id}/deployments"
+  ],
+  "deploy": [
+    "POST",
+    "/v1/services/{service_id}/deployments"
+  ],
+  "deployment_show": [
+    "GET",
+    "/v1/services/{service_id}/deployments/{dep_id}"
+  ],
+  "deployment_log": [
+    "GET",
+    "/v1/services/{service_id}/deployments/{dep_id}/log"
+  ],
+  "deployment_rollback": [
+    "POST",
+    "/v1/services/{service_id}/deployments/{dep_id}/action"
+  ],
+  "quota_show": [
+    "GET",
+    "/v1/quotas/{project_id}"
+  ],
+  "quota_set": [
+    "PUT",
+    "/v1/quotas/{project_id}"
+  ],
+  "database_engine_list": [
+    "GET",
+    "/v1/database_engines"
+  ],
+  "database_create": [
+    "POST",
+    "/v1/databases"
+  ],
+  "database_list": [
+    "GET",
+    "/v1/databases"
+  ],
+  "database_show": [
+    "GET",
+    "/v1/databases/{database_id}"
+  ],
+  "database_delete": [
+    "DELETE",
+    "/v1/databases/{database_id}"
+  ],
+  "database_start": [
+    "POST",
+    "/v1/databases/{database_id}/action"
+  ],
+  "database_stop": [
+    "POST",
+    "/v1/databases/{database_id}/action"
+  ],
+  "database_restart": [
+    "POST",
+    "/v1/databases/{database_id}/action"
+  ],
+  "database_logs": [
+    "GET",
+    "/v1/databases/{database_id}/logs"
+  ],
+  "database_credentials_show": [
+    "GET",
+    "/v1/databases/{database_id}/credentials"
+  ],
+  "database_backup_create": [
+    "POST",
+    "/v1/databases/{database_id}/backups"
+  ],
+  "database_backup_list": [
+    "GET",
+    "/v1/databases/{database_id}/backups"
+  ],
+  "database_backup_policy_set": [
+    "PUT",
+    "/v1/databases/{database_id}/backup_policy"
+  ],
+  "database_backup_policy_show": [
+    "GET",
+    "/v1/databases/{database_id}/backup_policy"
+  ],
+  "database_set": [
+    "PATCH",
+    "/v1/databases/{database_id}"
+  ],
+  "database_unset": [
+    "PATCH",
+    "/v1/databases/{database_id}"
+  ]
+}

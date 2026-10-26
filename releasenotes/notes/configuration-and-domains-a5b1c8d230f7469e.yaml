@@ -1,0 +1,23 @@
+---
+features:
+  - |
+    ``env set`` and ``env replace`` accept KEY=VALUE arguments, bare keys
+    with hidden terminal prompts or redirected stdin, and dotenv files
+    through ``--from-file``. Arguments override file entries. Replace
+    deletes omitted keys. Output masks environment values. ``env list``
+    displays variables and ``env unset KEY`` removes one key per command.
+    Values are stored in Barbican; the API returns null for secret values
+    and the CLI displays ``********``.
+  - |
+    ``compose show`` reads desired Compose configuration; ``compose set``
+    saves UTF-8 YAML from ``--file`` for a separate deployment to apply.
+    File mount commands manage metadata and write-only UTF-8 content
+    supplied through ``--file``. Both accept ``--file -`` for stdin.
+  - |
+    Domain commands add, list, show, update, verify and remove domains for
+    an app or service selected with ``--service``. Domain references accept
+    an FQDN or UUID. Add and set accept ``--primary``, ``--zone``, ``--host``,
+    ``--auto-dns`` or ``--no-auto-dns``, and ``--tls letsencrypt|none``.
+    TLS writes use API 1.2 or later. Show includes returned DNS instructions;
+    verify submits verification to Coast. ``dns zone list`` reads project
+    zones, with optional ``--dns-trust`` for delegated access.

@@ -1,0 +1,46 @@
+---
+features:
+  - |
+    Stack commands create, list, show, update and delete hosting stacks.
+    Stack lists include Plan, Engine version and Created at; ``--long``
+    adds Description and Default domain.
+    Create accepts ``--plan``, repeatable ``--worker`` specifications and
+    an optional ``--build-server``. DNS selections use ``--default-domain``,
+    ``--dns-zone`` and ``--dns-trust`` with API 1.22 or later.
+    Stack set clears these settings with mutually exclusive
+    ``--no-default-domain``, ``--no-dns-zone`` and ``--no-dns-trust`` flags.
+    ``stack upgrade STACK --image IMAGE_ID`` submits an app engine server
+    image upgrade; ``stack upgrade rollback STACK`` submits rollback.
+  - |
+    Server commands add, list, show and remove servers within ``--stack``.
+    ``server resize SERVER --stack STACK --flavor FLAVOR`` resizes one
+    server with API 1.26 or later. ``stack resize STACK --flavor FLAVOR``
+    replaces workers one at a time with larger VM flavors and requires
+    a selected API microversion of at least 1.26.
+  - |
+    ``plan list`` displays operator plans and their roles. ``flavor list``
+    displays allowed VM sizes, plans and roles using API 1.27 or later.
+    ``stack ingress rule list|create|delete`` selects its stack with
+    ``--stack`` and requires API 1.25 or later. Create takes ``--protocol``
+    and, for TCP or UDP, ``--port N`` or ``--port N:M``; ICMP omits ports.
+  - |
+    ``stack event list STACK`` requires API 1.8 or later and supports
+    ``--resource-type``, ``--limit``, ``--marker`` and ``--long``.
+    ``event list`` reads project events with resource, stack, action and
+    outcome and request ID filters, including events of deleted resources.
+    Both event lists show the newest 50 matching events by default.
+    ``--limit N`` caps the total across pages; ``--marker ID`` continues
+    after an event ID in newest-first order. ``--outcome`` accepts start,
+    success and failure. ``--long`` includes ID, Stack ID and Request ID;
+    stack events also include JSON Detail. Stack resource types include
+    stack, server, app and service; app and service require API 1.9.
+  - |
+    Administrators select mutually exclusive ``--all-projects`` or
+    ``--project PROJECT`` (project ID) on resource lists that support scope
+    queries. Scoped output includes Project ID and pagination retains scope.
+    Resource references require UUIDs with either option. Stack, server and
+    volume show accept ``--all-projects`` at API 1.18 or later, as does
+    ``stack event list STACK`` for cross-project timelines. Coast enforces
+    authorization; parent reads retain the API's project restrictions.
+    Scoped export lists obtain Project ID from their parent stack because
+    export responses omit ownership.

@@ -1,0 +1,7 @@
+---
+fixes:
+  - |
+    Align M5 database create help with the dashboard wording for the Coast
+    name, initial database and app user. After creation, a notice on stderr
+    explains how to reveal the generated password. Output formats, columns
+    and option names remain unchanged; creation never retrieves a password.

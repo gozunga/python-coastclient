@@ -1,0 +1,7 @@
+---
+fixes:
+  - |
+    App deploy key rotation now waits up to 30 seconds for the replacement
+    public key before displaying it. If rotation is still pending, the
+    command explains how to retrieve the key later and omits the old key.
+    This applies to generated keys and uploaded private keys.

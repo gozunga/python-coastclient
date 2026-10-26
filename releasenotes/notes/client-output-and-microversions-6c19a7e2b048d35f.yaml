@@ -1,0 +1,37 @@
+---
+features:
+  - |
+    The client supports API microversions 1.0 through 1.31 and negotiates
+    the newest common version by default. ``--os-coast-api-microversion``
+    or ``OS_COAST_API_MICROVERSION`` selects an explicit version, checked
+    against discovery bounds. Feature-specific requests preserve a newer
+    selected version.
+  - |
+    Stack, server, app group, environment, app and service references
+    accept exact names or UUIDs. Storage commands with both ``--stack``
+    and ``--service`` resolve workload names within that stack. Workload
+    show, lifecycle, env, domain, logs and deployment commands resolve names
+    across the project. Duplicate names within the lookup scope require a UUID.
+    List and show output supports OSC formatters and column selection
+    with sentence case headings and capacity units such as GiB and MiB.
+    Admin stack fields use Ingress security group ID and Management security
+    group ID headings. Resource write and action output uses the
+    corresponding show headings.
+    Delete and remove commands are silent on success. Background operations
+    return accepted state; use show or list to check progress.
+  - |
+    API errors exit 1 and invalid command-line arguments exit 2.
+    An empty ``--project`` reports ``Project ID must not be empty.``.
+    Structured API client errors preserve masked fault messages; missing
+    resource errors identify the addressed resource and supplied reference.
+    Conflict errors include a returned current status. Server and proxy
+    failures use generic error messages.
+  - |
+    ``quota show [--project PROJECT]`` displays resource limits and returned
+    usage, defaulting to the authenticated project.
+    ``quota set --project PROJECT`` updates selected limits, accepting -1
+    for unlimited, zero to block allocation
+    and ``default`` to reset a limit. Quota list, defaults and delete expose
+    overrides, configured defaults and override reset. Coast enforces
+    authorization for quota operations. ``quota delete --project PROJECT``
+    resets all overrides for the selected project.
